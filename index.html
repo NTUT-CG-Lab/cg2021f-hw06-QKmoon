@@ -139,7 +139,7 @@
 			plane.receiveShadow = true;
 
 
-			// PLY model files
+			// PLY model 
 
 			const loader = new PLYLoader();
 
@@ -152,7 +152,6 @@
 
 				mesh.name = "origin";
 				mesh.position.set(-0.5, origin_ys[model_name[model_id]], 0);
-				// mesh.rotation.set( - Math.PI / 2, 0, 0 );
 				mesh.scale.multiplyScalar(origin_scales[model_name[model_id]]);
 
 				mesh.castShadow = true;
@@ -216,7 +215,6 @@
 						const mesh = new THREE.Mesh(geometry, material);
 
 						mesh.name = element;
-						// mesh.rotation.set( - Math.PI / 2, 0, 0 );
 						if (model_id == 0) {
 							mesh.scale.multiplyScalar(0.5);
 							mesh.position.set(0.5, 0, 0);
