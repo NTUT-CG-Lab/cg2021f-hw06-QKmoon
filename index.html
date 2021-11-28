@@ -82,10 +82,8 @@
 
 		let camera, cameraTarget, scene, renderer;
 
-		// The iterations of pytorch3d models
 		const models = [0, 5, 10, 20, 30, 40, 50, 60, 80, 100, 130, 160, 190, 220, 250, 300, 400, 500, 600, 800, 1000, 1250, 1500, 1750, 2000];
 
-		// The scales and y-axis for the original model
 		const origin_scales = {
 			'dolphin': 1.35,
 			'cow': 0.6,
@@ -106,9 +104,7 @@
 		};
 
 
-		// The model list of this project, in team order (display, team1 ~ team6)
 		const model_name = ['dolphin', 'cow', 'teapot', 'bunny', 'cat', 'cake', 'pumpkin'];
-		// Set the model_id as your team number (which points to the model_name above)
 		let model_id = 0;
 
 
@@ -147,7 +143,6 @@
 
 			const loader = new PLYLoader();
 
-			// Load original model according to model_id
 			loader.load('./models/' + model_name[model_id] + '.ply', function (geometry) {
 
 				const material = new THREE.MeshPhongMaterial({ color: 0xFF5555, specular: 0x111111, shininess: 200 });
@@ -166,10 +161,8 @@
 				scene.add(mesh);
 			});
 
-			// The material for pytorch3d model
 			const material = new THREE.MeshPhongMaterial({ color: 0xAAAAAA, specular: 0x111111, shininess: 200 });
 
-			// Load all iter models of pytorch3d 
 			models.forEach(element => loader.load('./models/' + model_name[model_id] + '/model_' + element.toString() + '.ply',
 				function (geometry) {
 
@@ -179,7 +172,6 @@
 
 					mesh.name = element;
 					mesh.position.set(0.5, 0, 0);
-					// mesh.rotation.set( - Math.PI / 2, 0, 0 );
 					mesh.scale.multiplyScalar(0.5);
 
 					mesh.castShadow = true;
@@ -206,7 +198,6 @@
 
 					mesh.name = "origin";
 					mesh.position.set(-0.5, origin_ys[model_name[model_id]], 0);
-					// mesh.rotation.set( - Math.PI / 2, 0, 0 );
 					mesh.scale.multiplyScalar(origin_scales[model_name[model_id]]);
 
 					mesh.castShadow = true;
@@ -215,10 +206,8 @@
 					scene.add(mesh);
 				});
 
-				// The material for pytorch3d model
 				const material = new THREE.MeshPhongMaterial({ color: 0xAAAAAA, specular: 0x111111, shininess: 200 });
 
-				// Load all iter models of pytorch3d 
 				models.forEach(element => loader.load('./models/' + model_name[model_id] + '/model_' + element.toString() + '.ply',
 					function (geometry) {
 
@@ -278,17 +267,14 @@
 
 			// GUI onChange
 			let currentIter = effectController.step;
-			// Change model when step changes
 			function iterChanger() {
 				if (currentIter == effectController.step) return;
 				currentIter = effectController.step;
 
 				let step = effectController.step - 1
-				// Change textTag iter display
 				var textTag = document.getElementById('modelNum');
 				textTag.innerText = "iter #" + models[step].toString();
 
-				// Set the model to display as visible, otherwise invisible
 				for (let i = 0; i < models.length; i++) {
 					let item = scene.getObjectByName(models[i]);
 					if (i !== step && item.visible === true)
@@ -316,12 +302,6 @@
 			renderer.shadowMap.enabled = true;
 
 			container.appendChild(renderer.domElement);
-
-			// Stats
-
-			// stats = new Stats();
-			// container.appendChild( stats.dom );
-
 
 			window.addEventListener('resize', onWindowResize);
 
@@ -364,7 +344,6 @@
 			requestAnimationFrame(animate);
 
 			render();
-			// stats.update();
 
 		}
 
